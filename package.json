@@ -41,7 +41,7 @@
     "mkdirp": "0.5.1"
   },
   "devDependencies": {
-    "mocha": "5.2.0",
+    "mocha": "^8.0.1",
     "typescript": "^3.9.7"
   }
 }

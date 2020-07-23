@@ -9,17 +9,17 @@ describe("smartpy compiler", () => {
     contracts_build_directory: path.join(__dirname, "./build/"),
     quiet: true,
     all: true,
-    _: []
+    _: [],
   };
   const config = new TruffleConfig().merge(defaultSettings);
 
-  it("compiles smartpy contracts", done => {
+  it("compiles smartpy contracts", (done) => {
     compile.all(config, (err, contracts, paths) => {
       assert.equal(err, null, `Compiles with an error!: \n\n${err}`);
 
-      paths!.forEach(path => {
+      paths!.forEach((path) => {
         assert(
-          [".py"].some(extension => path.indexOf(extension) !== -1),
+          [".py"].some((extension) => path.indexOf(extension) !== -1),
           "Paths should only include smartpy files (.py)"
         );
       });
@@ -69,11 +69,11 @@ describe("smartpy compiler", () => {
     });
   });
 
-  it("skips solidity contracts", done => {
+  it("skips solidity contracts", (done) => {
     compile.all(config, (err, contracts, paths) => {
       assert.equal(err, null, "Compiled with an error");
 
-      paths!.forEach(path => {
+      paths!.forEach((path) => {
         assert.equal(
           path.indexOf(".sol"),
           -1,
@@ -99,7 +99,7 @@ describe("smartpy compiler", () => {
       .merge(defaultSettings)
       .merge({ _: ["bad"] });
 
-    it("compiles successfully when passed a valid entry", done => {
+    it("compiles successfully when passed a valid entry", (done) => {
       compile.all(configWithValidEntryPoint, (err, contracts) => {
         assert.equal(err, null, "Compiled with an error!");
         assert(contracts, "Contracts missing!");
@@ -107,7 +107,7 @@ describe("smartpy compiler", () => {
       });
     });
 
-    it("errors when passed an invalid entry", done => {
+    it("errors when passed an invalid entry", (done) => {
       compile.all(configWithBadEntryPoint, (err, contracts) => {
         assert(err, "Should not have compiled!");
         assert.equal(contracts, null, "Contracts should be missing!");

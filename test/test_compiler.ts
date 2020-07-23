@@ -1,7 +1,7 @@
-const path = require("path");
-const assert = require("assert");
-const Config = require("@truffle/config");
-const compile = require("../index");
+import path from "path";
+import assert from "assert";
+import TruffleConfig from "@truffle/config";
+import compile from "../src/index";
 
 describe("smartpy compiler", () => {
   const defaultSettings = {
@@ -11,13 +11,13 @@ describe("smartpy compiler", () => {
     all: true,
     _: []
   };
-  const config = new Config().merge(defaultSettings);
+  const config = new TruffleConfig().merge(defaultSettings);
 
   it("compiles smartpy contracts", done => {
     compile.all(config, (err, contracts, paths) => {
       assert.equal(err, null, `Compiles with an error!: \n\n${err}`);
 
-      paths.forEach(path => {
+      paths!.forEach(path => {
         assert(
           [".py"].some(extension => path.indexOf(extension) !== -1),
           "Paths should only include smartpy files (.py)"
@@ -73,7 +73,7 @@ describe("smartpy compiler", () => {
     compile.all(config, (err, contracts, paths) => {
       assert.equal(err, null, "Compiled with an error");
 
-      paths.forEach(path => {
+      paths!.forEach(path => {
         assert.equal(
           path.indexOf(".sol"),
           -1,
@@ -92,10 +92,10 @@ describe("smartpy compiler", () => {
   });
 
   describe("when passed an entry point", () => {
-    const configWithValidEntryPoint = new Config()
+    const configWithValidEntryPoint = new TruffleConfig()
       .merge(defaultSettings)
       .merge({ _: ["SmartPyContract1"] });
-    const configWithBadEntryPoint = new Config()
+    const configWithBadEntryPoint = new TruffleConfig()
       .merge(defaultSettings)
       .merge({ _: ["bad"] });
 
